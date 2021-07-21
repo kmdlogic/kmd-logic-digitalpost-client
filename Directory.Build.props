@@ -14,7 +14,7 @@
     <Version Condition=" '$(Version)' == '' ">$(VersionPrefix)</Version>
     <Authors>KMD</Authors>
     <PackageTags>kmd;logic;digitalpost</PackageTags>
-	<PackageIcon>https://console.kmdlogic.io/favicon-32x32.png</PackageIcon>
+	<PackageIcon>kmd-logic-icon.png</PackageIcon>
     <PackageProjectUrl>https://github.com/kmdlogic/kmd-logic-digitalpost-client</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/kmdlogic/kmd-logic-digitalpost-client</RepositoryUrl>
