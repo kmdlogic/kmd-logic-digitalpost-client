@@ -804,10 +804,10 @@ namespace Kmd.Logic.DigitalPost.Client
         /// <param name='digitalPostConfigurationId'>
         /// DigitalPost provider configuration Id
         /// </param>
+        /// <param name='subscriptionId'>
+        /// </param>
         /// <param name='request'>
         /// Request body
-        /// </param>
-        /// <param name='subscriptionId'>
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -830,15 +830,15 @@ namespace Kmd.Logic.DigitalPost.Client
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IDictionary<string, IList<string>>>> GetConsentWithHttpMessagesAsync(System.Guid digitalPostConfigurationId, SendConsentPayloadRequest request, string subscriptionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IDictionary<string, IList<string>>>> GetConsentWithHttpMessagesAsync(System.Guid digitalPostConfigurationId, string subscriptionId, SendConsentPayloadRequest request, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (request == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "request");
-            }
             if (subscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "subscriptionId");
+            }
+            if (request == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "request");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -848,8 +848,8 @@ namespace Kmd.Logic.DigitalPost.Client
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("digitalPostConfigurationId", digitalPostConfigurationId);
-                tracingParameters.Add("request", request);
                 tracingParameters.Add("subscriptionId", subscriptionId);
+                tracingParameters.Add("request", request);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetConsent", tracingParameters);
             }
@@ -1257,7 +1257,7 @@ namespace Kmd.Logic.DigitalPost.Client
         /// <param name='name'>
         /// </param>
         /// <param name='environment'>
-        /// Possible values include: 'production', 'test'
+        /// Possible values include: 'Production', 'Test'
         /// </param>
         /// <param name='callbackUrl'>
         /// </param>
@@ -1442,7 +1442,7 @@ namespace Kmd.Logic.DigitalPost.Client
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<IDictionary<string, string>>(_responseContent, DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<IDictionary<string, IList<string>>>(_responseContent, DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1474,7 +1474,7 @@ namespace Kmd.Logic.DigitalPost.Client
         /// <param name='name'>
         /// </param>
         /// <param name='environment'>
-        /// Possible values include: 'production', 'test'
+        /// Possible values include: 'Production', 'Test'
         /// </param>
         /// <param name='callbackUrl'>
         /// </param>
@@ -1659,459 +1659,7 @@ namespace Kmd.Logic.DigitalPost.Client
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<IDictionary<string, string>>(_responseContent, DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Updates existing eboks configuration and upload certificate file to the
-        /// Azure Key Vault
-        /// </summary>
-        /// <param name='subscriptionId'>
-        /// Id of LoGIC subscription
-        /// </param>
-        /// <param name='id'>
-        /// </param>
-        /// <param name='systemId'>
-        /// </param>
-        /// <param name='environment'>
-        /// Possible values include: 'production', 'test'
-        /// </param>
-        /// <param name='callbackUrl'>
-        /// </param>
-        /// <param name='name'>
-        /// </param>
-        /// <param name='certificate'>
-        /// </param>
-        /// <param name='certificatePassword'>
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="HttpOperationException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<HttpOperationResponse<object>> UpdateEboksConfigurationWithHttpMessagesAsync(System.Guid subscriptionId, string id = default(string), int? systemId = default(int?), string environment = default(string), string callbackUrl = default(string), string name = default(string), Stream certificate = default(Stream), string certificatePassword = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("subscriptionId", subscriptionId);
-                tracingParameters.Add("id", id);
-                tracingParameters.Add("systemId", systemId);
-                tracingParameters.Add("environment", environment);
-                tracingParameters.Add("callbackUrl", callbackUrl);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("certificate", certificate);
-                tracingParameters.Add("certificatePassword", certificatePassword);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "UpdateEboksConfiguration", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/digital-post/configurations/eboks").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(subscriptionId, SerializationSettings).Trim('"')));
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PUT");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            MultipartFormDataContent _multiPartContent = new MultipartFormDataContent();
-            if (id != null)
-            {
-                StringContent _id = new StringContent(id, System.Text.Encoding.UTF8);
-                _multiPartContent.Add(_id, "id");
-            }
-            if (systemId != null)
-            {
-                StringContent _systemId = new StringContent(SafeJsonConvert.SerializeObject(systemId, SerializationSettings).Trim('"'), System.Text.Encoding.UTF8);
-                _multiPartContent.Add(_systemId, "systemId");
-            }
-            if (environment != null)
-            {
-                StringContent _environment = new StringContent(SafeJsonConvert.SerializeObject(environment, SerializationSettings).Trim('"'), System.Text.Encoding.UTF8);
-                _multiPartContent.Add(_environment, "environment");
-            }
-            if (callbackUrl != null)
-            {
-                StringContent _callbackUrl = new StringContent(callbackUrl, System.Text.Encoding.UTF8);
-                _multiPartContent.Add(_callbackUrl, "callbackUrl");
-            }
-            if (name != null)
-            {
-                StringContent _name = new StringContent(name, System.Text.Encoding.UTF8);
-                _multiPartContent.Add(_name, "name");
-            }
-            if (certificate != null)
-            {
-                StreamContent _certificate = new StreamContent(certificate);
-                _certificate.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-                ContentDispositionHeaderValue _contentDispositionHeaderValue = new ContentDispositionHeaderValue("form-data");
-                _contentDispositionHeaderValue.Name = "certificate";
-                // get filename from stream if it's a file otherwise, just use  'unknown'
-                var _fileStream = certificate as FileStream;
-                var _fileName = (_fileStream != null ? _fileStream.Name : null) ?? "unknown";
-                if(System.Linq.Enumerable.Any(_fileName, c => c > 127) )
-                {
-                    // non ASCII chars detected, need UTF encoding:
-                    _contentDispositionHeaderValue.FileNameStar = _fileName;
-                }
-                else
-                {
-                    // ASCII only
-                    _contentDispositionHeaderValue.FileName = _fileName;
-                }
-                _certificate.Headers.ContentDisposition = _contentDispositionHeaderValue;
-                _multiPartContent.Add(_certificate, "certificate");
-            }
-            if (certificatePassword != null)
-            {
-                StringContent _certificatePassword = new StringContent(certificatePassword, System.Text.Encoding.UTF8);
-                _multiPartContent.Add(_certificatePassword, "certificatePassword");
-            }
-            _httpRequest.Content = _multiPartContent;
-            // Set Credentials
-            if (Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 400)
-            {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                }
-                else {
-                    _responseContent = string.Empty;
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new HttpOperationResponse<object>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<EboksProviderConfiguration>(_responseContent, DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 400)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<IDictionary<string, string>>(_responseContent, DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Adds existing eboks configuration and upload certificate file to the Azure
-        /// Key Vault
-        /// </summary>
-        /// <param name='subscriptionId'>
-        /// Id of LoGIC subscription
-        /// </param>
-        /// <param name='id'>
-        /// </param>
-        /// <param name='systemId'>
-        /// </param>
-        /// <param name='environment'>
-        /// Possible values include: 'production', 'test'
-        /// </param>
-        /// <param name='callbackUrl'>
-        /// </param>
-        /// <param name='name'>
-        /// </param>
-        /// <param name='certificate'>
-        /// </param>
-        /// <param name='certificatePassword'>
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="HttpOperationException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<HttpOperationResponse<object>> CreateEboksConfigurationWithHttpMessagesAsync(System.Guid subscriptionId, string id = default(string), int? systemId = default(int?), string environment = default(string), string callbackUrl = default(string), string name = default(string), Stream certificate = default(Stream), string certificatePassword = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("subscriptionId", subscriptionId);
-                tracingParameters.Add("id", id);
-                tracingParameters.Add("systemId", systemId);
-                tracingParameters.Add("environment", environment);
-                tracingParameters.Add("callbackUrl", callbackUrl);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("certificate", certificate);
-                tracingParameters.Add("certificatePassword", certificatePassword);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "CreateEboksConfiguration", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/digital-post/configurations/eboks").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(subscriptionId, SerializationSettings).Trim('"')));
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("POST");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            MultipartFormDataContent _multiPartContent = new MultipartFormDataContent();
-            if (id != null)
-            {
-                StringContent _id = new StringContent(id, System.Text.Encoding.UTF8);
-                _multiPartContent.Add(_id, "id");
-            }
-            if (systemId != null)
-            {
-                StringContent _systemId = new StringContent(SafeJsonConvert.SerializeObject(systemId, SerializationSettings).Trim('"'), System.Text.Encoding.UTF8);
-                _multiPartContent.Add(_systemId, "systemId");
-            }
-            if (environment != null)
-            {
-                StringContent _environment = new StringContent(SafeJsonConvert.SerializeObject(environment, SerializationSettings).Trim('"'), System.Text.Encoding.UTF8);
-                _multiPartContent.Add(_environment, "environment");
-            }
-            if (callbackUrl != null)
-            {
-                StringContent _callbackUrl = new StringContent(callbackUrl, System.Text.Encoding.UTF8);
-                _multiPartContent.Add(_callbackUrl, "callbackUrl");
-            }
-            if (name != null)
-            {
-                StringContent _name = new StringContent(name, System.Text.Encoding.UTF8);
-                _multiPartContent.Add(_name, "name");
-            }
-            if (certificate != null)
-            {
-                StreamContent _certificate = new StreamContent(certificate);
-                _certificate.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-                ContentDispositionHeaderValue _contentDispositionHeaderValue = new ContentDispositionHeaderValue("form-data");
-                _contentDispositionHeaderValue.Name = "certificate";
-                // get filename from stream if it's a file otherwise, just use  'unknown'
-                var _fileStream = certificate as FileStream;
-                var _fileName = (_fileStream != null ? _fileStream.Name : null) ?? "unknown";
-                if(System.Linq.Enumerable.Any(_fileName, c => c > 127) )
-                {
-                    // non ASCII chars detected, need UTF encoding:
-                    _contentDispositionHeaderValue.FileNameStar = _fileName;
-                }
-                else
-                {
-                    // ASCII only
-                    _contentDispositionHeaderValue.FileName = _fileName;
-                }
-                _certificate.Headers.ContentDisposition = _contentDispositionHeaderValue;
-                _multiPartContent.Add(_certificate, "certificate");
-            }
-            if (certificatePassword != null)
-            {
-                StringContent _certificatePassword = new StringContent(certificatePassword, System.Text.Encoding.UTF8);
-                _multiPartContent.Add(_certificatePassword, "certificatePassword");
-            }
-            _httpRequest.Content = _multiPartContent;
-            // Set Credentials
-            if (Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 400)
-            {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                }
-                else {
-                    _responseContent = string.Empty;
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new HttpOperationResponse<object>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<EboksProviderConfiguration>(_responseContent, DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 400)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<IDictionary<string, string>>(_responseContent, DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<IDictionary<string, IList<string>>>(_responseContent, DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -2286,7 +1834,7 @@ namespace Kmd.Logic.DigitalPost.Client
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<IDictionary<string, string>>(_responseContent, DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<IDictionary<string, IList<string>>>(_responseContent, DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -2461,7 +2009,7 @@ namespace Kmd.Logic.DigitalPost.Client
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<IDictionary<string, string>>(_responseContent, DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<IDictionary<string, IList<string>>>(_responseContent, DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

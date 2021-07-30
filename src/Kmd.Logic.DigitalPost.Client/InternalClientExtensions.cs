@@ -149,14 +149,14 @@ namespace Kmd.Logic.DigitalPost.Client
             /// <param name='digitalPostConfigurationId'>
             /// DigitalPost provider configuration Id
             /// </param>
+            /// <param name='subscriptionId'>
+            /// </param>
             /// <param name='request'>
             /// Request body
             /// </param>
-            /// <param name='subscriptionId'>
-            /// </param>
-            public static IDictionary<string, IList<string>> GetConsent(this IInternalClient operations, System.Guid digitalPostConfigurationId, SendConsentPayloadRequest request, string subscriptionId)
+            public static IDictionary<string, IList<string>> GetConsent(this IInternalClient operations, System.Guid digitalPostConfigurationId, string subscriptionId, SendConsentPayloadRequest request)
             {
-                return operations.GetConsentAsync(digitalPostConfigurationId, request, subscriptionId).GetAwaiter().GetResult();
+                return operations.GetConsentAsync(digitalPostConfigurationId, subscriptionId, request).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -168,17 +168,17 @@ namespace Kmd.Logic.DigitalPost.Client
             /// <param name='digitalPostConfigurationId'>
             /// DigitalPost provider configuration Id
             /// </param>
+            /// <param name='subscriptionId'>
+            /// </param>
             /// <param name='request'>
             /// Request body
-            /// </param>
-            /// <param name='subscriptionId'>
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IDictionary<string, IList<string>>> GetConsentAsync(this IInternalClient operations, System.Guid digitalPostConfigurationId, SendConsentPayloadRequest request, string subscriptionId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IDictionary<string, IList<string>>> GetConsentAsync(this IInternalClient operations, System.Guid digitalPostConfigurationId, string subscriptionId, SendConsentPayloadRequest request, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetConsentWithHttpMessagesAsync(digitalPostConfigurationId, request, subscriptionId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetConsentWithHttpMessagesAsync(digitalPostConfigurationId, subscriptionId, request, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -278,7 +278,7 @@ namespace Kmd.Logic.DigitalPost.Client
             /// <param name='name'>
             /// </param>
             /// <param name='environment'>
-            /// Possible values include: 'production', 'test'
+            /// Possible values include: 'Production', 'Test'
             /// </param>
             /// <param name='callbackUrl'>
             /// </param>
@@ -305,7 +305,7 @@ namespace Kmd.Logic.DigitalPost.Client
             /// <param name='name'>
             /// </param>
             /// <param name='environment'>
-            /// Possible values include: 'production', 'test'
+            /// Possible values include: 'Production', 'Test'
             /// </param>
             /// <param name='callbackUrl'>
             /// </param>
@@ -338,7 +338,7 @@ namespace Kmd.Logic.DigitalPost.Client
             /// <param name='name'>
             /// </param>
             /// <param name='environment'>
-            /// Possible values include: 'production', 'test'
+            /// Possible values include: 'Production', 'Test'
             /// </param>
             /// <param name='callbackUrl'>
             /// </param>
@@ -365,7 +365,7 @@ namespace Kmd.Logic.DigitalPost.Client
             /// <param name='name'>
             /// </param>
             /// <param name='environment'>
-            /// Possible values include: 'production', 'test'
+            /// Possible values include: 'Production', 'Test'
             /// </param>
             /// <param name='callbackUrl'>
             /// </param>
@@ -377,138 +377,6 @@ namespace Kmd.Logic.DigitalPost.Client
             public static async Task<object> CreateDoc2MailConfigurationAsync(this IInternalClient operations, System.Guid subscriptionId, string id = default(string), int? systemId = default(int?), string name = default(string), string environment = default(string), string callbackUrl = default(string), Stream certificate = default(Stream), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateDoc2MailConfigurationWithHttpMessagesAsync(subscriptionId, id, systemId, name, environment, callbackUrl, certificate, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Updates existing eboks configuration and upload certificate file to the
-            /// Azure Key Vault
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='subscriptionId'>
-            /// Id of LoGIC subscription
-            /// </param>
-            /// <param name='id'>
-            /// </param>
-            /// <param name='systemId'>
-            /// </param>
-            /// <param name='environment'>
-            /// Possible values include: 'production', 'test'
-            /// </param>
-            /// <param name='callbackUrl'>
-            /// </param>
-            /// <param name='name'>
-            /// </param>
-            /// <param name='certificate'>
-            /// </param>
-            /// <param name='certificatePassword'>
-            /// </param>
-            public static object UpdateEboksConfiguration(this IInternalClient operations, System.Guid subscriptionId, string id = default(string), int? systemId = default(int?), string environment = default(string), string callbackUrl = default(string), string name = default(string), Stream certificate = default(Stream), string certificatePassword = default(string))
-            {
-                return operations.UpdateEboksConfigurationAsync(subscriptionId, id, systemId, environment, callbackUrl, name, certificate, certificatePassword).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates existing eboks configuration and upload certificate file to the
-            /// Azure Key Vault
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='subscriptionId'>
-            /// Id of LoGIC subscription
-            /// </param>
-            /// <param name='id'>
-            /// </param>
-            /// <param name='systemId'>
-            /// </param>
-            /// <param name='environment'>
-            /// Possible values include: 'production', 'test'
-            /// </param>
-            /// <param name='callbackUrl'>
-            /// </param>
-            /// <param name='name'>
-            /// </param>
-            /// <param name='certificate'>
-            /// </param>
-            /// <param name='certificatePassword'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> UpdateEboksConfigurationAsync(this IInternalClient operations, System.Guid subscriptionId, string id = default(string), int? systemId = default(int?), string environment = default(string), string callbackUrl = default(string), string name = default(string), Stream certificate = default(Stream), string certificatePassword = default(string), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.UpdateEboksConfigurationWithHttpMessagesAsync(subscriptionId, id, systemId, environment, callbackUrl, name, certificate, certificatePassword, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Adds existing eboks configuration and upload certificate file to the Azure
-            /// Key Vault
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='subscriptionId'>
-            /// Id of LoGIC subscription
-            /// </param>
-            /// <param name='id'>
-            /// </param>
-            /// <param name='systemId'>
-            /// </param>
-            /// <param name='environment'>
-            /// Possible values include: 'production', 'test'
-            /// </param>
-            /// <param name='callbackUrl'>
-            /// </param>
-            /// <param name='name'>
-            /// </param>
-            /// <param name='certificate'>
-            /// </param>
-            /// <param name='certificatePassword'>
-            /// </param>
-            public static object CreateEboksConfiguration(this IInternalClient operations, System.Guid subscriptionId, string id = default(string), int? systemId = default(int?), string environment = default(string), string callbackUrl = default(string), string name = default(string), Stream certificate = default(Stream), string certificatePassword = default(string))
-            {
-                return operations.CreateEboksConfigurationAsync(subscriptionId, id, systemId, environment, callbackUrl, name, certificate, certificatePassword).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Adds existing eboks configuration and upload certificate file to the Azure
-            /// Key Vault
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='subscriptionId'>
-            /// Id of LoGIC subscription
-            /// </param>
-            /// <param name='id'>
-            /// </param>
-            /// <param name='systemId'>
-            /// </param>
-            /// <param name='environment'>
-            /// Possible values include: 'production', 'test'
-            /// </param>
-            /// <param name='callbackUrl'>
-            /// </param>
-            /// <param name='name'>
-            /// </param>
-            /// <param name='certificate'>
-            /// </param>
-            /// <param name='certificatePassword'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> CreateEboksConfigurationAsync(this IInternalClient operations, System.Guid subscriptionId, string id = default(string), int? systemId = default(int?), string environment = default(string), string callbackUrl = default(string), string name = default(string), Stream certificate = default(Stream), string certificatePassword = default(string), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.CreateEboksConfigurationWithHttpMessagesAsync(subscriptionId, id, systemId, environment, callbackUrl, name, certificate, certificatePassword, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

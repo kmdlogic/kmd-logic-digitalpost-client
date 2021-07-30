@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.1.1",
+    "version": "1.1.2",
     "title": "KMD Logic Digital Post Service API"
   },
   "paths": {
@@ -35,7 +35,6 @@
             "name": "request",
             "in": "body",
             "description": "Request body",
-            "required": false,
             "schema": {
               "$ref": "#/definitions/SendMessageRequest"
             }
@@ -53,7 +52,6 @@
             "schema": {
               "type": "object",
               "additionalProperties": {
-                "uniqueItems": false,
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -99,7 +97,6 @@
             "name": "request",
             "in": "body",
             "description": "Request body",
-            "required": false,
             "schema": {
               "$ref": "#/definitions/SendDocumentRequest"
             }
@@ -117,7 +114,6 @@
             "schema": {
               "type": "object",
               "additionalProperties": {
-                "uniqueItems": false,
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -206,6 +202,12 @@
             "format": "uuid"
           },
           {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "request",
             "in": "body",
             "description": "Request body",
@@ -213,12 +215,6 @@
             "schema": {
               "$ref": "#/definitions/SendConsentPayloadRequest"
             }
-          },
-          {
-            "name": "subscriptionId",
-            "in": "path",
-            "required": true,
-            "type": "string"
           }
         ],
         "responses": {
@@ -230,7 +226,6 @@
             "schema": {
               "type": "object",
               "additionalProperties": {
-                "uniqueItems": false,
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -253,7 +248,6 @@
         ],
         "summary": "Retrieves digital post configuration provider assigned to the logic subscription",
         "operationId": "GetDigitalPostConfiguration",
-        "consumes": [],
         "produces": [
           "application/json",
           "text/json"
@@ -304,7 +298,6 @@
         ],
         "summary": "Retrieves digital post configuration providers assigned to the logic subscription",
         "operationId": "GetAllDigitalPostConfigurations",
-        "consumes": [],
         "produces": [
           "application/json",
           "text/json"
@@ -323,7 +316,6 @@
           "200": {
             "description": "Success",
             "schema": {
-              "uniqueItems": false,
               "type": "array",
               "items": {
                 "$ref": "#/definitions/DigitalPostProviderConfigurationModel"
@@ -364,43 +356,38 @@
           {
             "name": "id",
             "in": "formData",
-            "required": false,
             "type": "string",
             "format": "uuid"
           },
           {
             "name": "systemId",
             "in": "formData",
-            "required": false,
             "type": "integer",
             "format": "int32"
           },
           {
             "name": "name",
             "in": "formData",
-            "required": false,
             "type": "string"
           },
           {
             "name": "environment",
             "in": "formData",
-            "required": false,
             "type": "string",
             "enum": [
-              "production",
-              "test"
+              "Production",
+              "Test"
             ]
           },
           {
             "name": "callbackUrl",
             "in": "formData",
-            "required": false,
-            "type": "string"
+            "type": "string",
+            "format": "uri"
           },
           {
             "name": "certificate",
             "in": "formData",
-            "required": false,
             "type": "file"
           }
         ],
@@ -416,7 +403,10 @@
             "schema": {
               "type": "object",
               "additionalProperties": {
-                "type": "string"
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               }
             }
           }
@@ -452,43 +442,38 @@
           {
             "name": "id",
             "in": "formData",
-            "required": false,
             "type": "string",
             "format": "uuid"
           },
           {
             "name": "systemId",
             "in": "formData",
-            "required": false,
             "type": "integer",
             "format": "int32"
           },
           {
             "name": "name",
             "in": "formData",
-            "required": false,
             "type": "string"
           },
           {
             "name": "environment",
             "in": "formData",
-            "required": false,
             "type": "string",
             "enum": [
-              "production",
-              "test"
+              "Production",
+              "Test"
             ]
           },
           {
             "name": "callbackUrl",
             "in": "formData",
-            "required": false,
-            "type": "string"
+            "type": "string",
+            "format": "uri"
           },
           {
             "name": "certificate",
             "in": "formData",
-            "required": false,
             "type": "file"
           }
         ],
@@ -504,197 +489,10 @@
             "schema": {
               "type": "object",
               "additionalProperties": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "Bearer": []
-          }
-        ]
-      }
-    },
-    "/subscriptions/{subscriptionId}/digital-post/configurations/eboks": {
-      "put": {
-        "tags": [
-          "EboksConfiguration"
-        ],
-        "summary": "Updates existing eboks configuration and upload certificate file to the Azure Key Vault",
-        "operationId": "UpdateEboksConfiguration",
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "produces": [
-          "application/json",
-          "text/json"
-        ],
-        "parameters": [
-          {
-            "name": "subscriptionId",
-            "in": "path",
-            "description": "Id of LoGIC subscription",
-            "required": true,
-            "type": "string",
-            "format": "uuid"
-          },
-          {
-            "name": "id",
-            "in": "formData",
-            "required": false,
-            "type": "string",
-            "format": "uuid"
-          },
-          {
-            "name": "systemId",
-            "in": "formData",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "environment",
-            "in": "formData",
-            "required": false,
-            "type": "string",
-            "enum": [
-              "production",
-              "test"
-            ]
-          },
-          {
-            "name": "callbackUrl",
-            "in": "formData",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "name",
-            "in": "formData",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "certificate",
-            "in": "formData",
-            "required": false,
-            "type": "file"
-          },
-          {
-            "name": "certificatePassword",
-            "in": "formData",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/EboksProviderConfiguration"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "object",
-              "additionalProperties": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "Bearer": []
-          }
-        ]
-      },
-      "post": {
-        "tags": [
-          "EboksConfiguration"
-        ],
-        "summary": "Adds existing eboks configuration and upload certificate file to the Azure Key Vault",
-        "operationId": "CreateEboksConfiguration",
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "produces": [
-          "application/json",
-          "text/json"
-        ],
-        "parameters": [
-          {
-            "name": "subscriptionId",
-            "in": "path",
-            "description": "Id of LoGIC subscription",
-            "required": true,
-            "type": "string",
-            "format": "uuid"
-          },
-          {
-            "name": "id",
-            "in": "formData",
-            "required": false,
-            "type": "string",
-            "format": "uuid"
-          },
-          {
-            "name": "systemId",
-            "in": "formData",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "environment",
-            "in": "formData",
-            "required": false,
-            "type": "string",
-            "enum": [
-              "production",
-              "test"
-            ]
-          },
-          {
-            "name": "callbackUrl",
-            "in": "formData",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "name",
-            "in": "formData",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "certificate",
-            "in": "formData",
-            "required": false,
-            "type": "file"
-          },
-          {
-            "name": "certificatePassword",
-            "in": "formData",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/EboksProviderConfiguration"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "type": "object",
-              "additionalProperties": {
-                "type": "string"
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               }
             }
           }
@@ -732,20 +530,18 @@
           {
             "name": "id",
             "in": "formData",
-            "required": false,
             "type": "string",
             "format": "uuid"
           },
           {
             "name": "callbackUrl",
             "in": "formData",
-            "required": false,
-            "type": "string"
+            "type": "string",
+            "format": "uri"
           },
           {
             "name": "name",
             "in": "formData",
-            "required": false,
             "type": "string"
           }
         ],
@@ -761,7 +557,10 @@
             "schema": {
               "type": "object",
               "additionalProperties": {
-                "type": "string"
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               }
             }
           }
@@ -797,20 +596,18 @@
           {
             "name": "id",
             "in": "formData",
-            "required": false,
             "type": "string",
             "format": "uuid"
           },
           {
             "name": "callbackUrl",
             "in": "formData",
-            "required": false,
-            "type": "string"
+            "type": "string",
+            "format": "uri"
           },
           {
             "name": "name",
             "in": "formData",
-            "required": false,
             "type": "string"
           }
         ],
@@ -826,7 +623,10 @@
             "schema": {
               "type": "object",
               "additionalProperties": {
-                "type": "string"
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               }
             }
           }
@@ -840,6 +640,20 @@
     }
   },
   "definitions": {
+    "MessageAttachment": {
+      "type": "object",
+      "properties": {
+        "referenceId": {
+          "format": "uuid",
+          "description": "Identifier of the uploaded file",
+          "type": "string"
+        },
+        "fileName": {
+          "description": "Name of the file",
+          "type": "string"
+        }
+      }
+    },
     "SendMessageRequest": {
       "description": "Single text message request",
       "type": "object",
@@ -854,8 +668,11 @@
           "type": "string"
         },
         "identifierType": {
-          "$ref": "#/definitions/IdentifierType",
-          "description": "Type of identifier - CPR for a citizen, CVR for a company"
+          "type": "string",
+          "enum": [
+            "Cpr",
+            "Cvr"
+          ]
         },
         "identifier": {
           "description": "Identifier value (CPR/CVR)",
@@ -879,32 +696,10 @@
         },
         "attachments": {
           "description": "Array of attachments - max 10 (9 if metadata exist)",
-          "uniqueItems": false,
           "type": "array",
           "items": {
             "$ref": "#/definitions/MessageAttachment"
           }
-        }
-      }
-    },
-    "IdentifierType": {
-      "enum": [
-        "cpr",
-        "cvr"
-      ],
-      "type": "string"
-    },
-    "MessageAttachment": {
-      "type": "object",
-      "properties": {
-        "referenceId": {
-          "format": "uuid",
-          "description": "Identifier of the uploaded file",
-          "type": "string"
-        },
-        "fileName": {
-          "description": "Name of the file",
-          "type": "string"
         }
       }
     },
@@ -934,8 +729,11 @@
           "type": "string"
         },
         "identifierType": {
-          "$ref": "#/definitions/IdentifierType",
-          "description": "Type of identifier - CPR for a citizen, CVR for a company"
+          "type": "string",
+          "enum": [
+            "Cpr",
+            "Cvr"
+          ]
         },
         "identifier": {
           "description": "Identifier value (CPR/CVR)",
@@ -959,7 +757,6 @@
         },
         "attachments": {
           "description": "Array of attachments - max 10 (9 if metadata exist)",
-          "uniqueItems": false,
           "type": "array",
           "items": {
             "$ref": "#/definitions/MessageAttachment"
@@ -1009,6 +806,7 @@
           "type": "integer"
         },
         "callbackUrl": {
+          "format": "uri",
           "type": "string"
         },
         "certificateFileName": {
@@ -1022,19 +820,9 @@
         }
       }
     },
-    "Doc2MailEnvironment": {
-      "enum": [
-        "production",
-        "test"
-      ],
-      "type": "string"
-    },
     "Doc2MailProviderConfiguration": {
       "type": "object",
       "properties": {
-        "environment": {
-          "$ref": "#/definitions/Doc2MailEnvironment"
-        },
         "id": {
           "format": "uuid",
           "type": "string"
@@ -1051,46 +839,18 @@
           "type": "integer"
         },
         "callbackUrl": {
+          "format": "uri",
           "type": "string"
         },
         "certificateFileName": {
           "type": "string"
-        }
-      }
-    },
-    "EboksEnvironment": {
-      "enum": [
-        "production",
-        "test"
-      ],
-      "type": "string"
-    },
-    "EboksProviderConfiguration": {
-      "type": "object",
-      "properties": {
+        },
         "environment": {
-          "$ref": "#/definitions/EboksEnvironment"
-        },
-        "id": {
-          "format": "uuid",
-          "type": "string"
-        },
-        "subscriptionId": {
-          "format": "uuid",
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "systemId": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "callbackUrl": {
-          "type": "string"
-        },
-        "certificateFileName": {
-          "type": "string"
+          "type": "string",
+          "enum": [
+            "Production",
+            "Test"
+          ]
         }
       }
     },
@@ -1113,6 +873,7 @@
           "type": "integer"
         },
         "callbackUrl": {
+          "format": "uri",
           "type": "string"
         },
         "certificateFileName": {
@@ -1128,6 +889,5 @@
       "type": "apiKey",
       "description": "Standard Authorization header using the Bearer scheme. <b>Example: \"bearer {token}\".</b> You can obtain that value from your browser Developer tools"
     }
-  },
-  "tags": []
+  }
 }

@@ -24,17 +24,17 @@ namespace Kmd.Logic.DigitalPost.Client.Models
         /// Initializes a new instance of the Doc2MailProviderConfiguration
         /// class.
         /// </summary>
-        /// <param name="environment">Possible values include: 'production',
-        /// 'test'</param>
-        public Doc2MailProviderConfiguration(string environment = default(string), System.Guid? id = default(System.Guid?), System.Guid? subscriptionId = default(System.Guid?), string name = default(string), int? systemId = default(int?), string callbackUrl = default(string), string certificateFileName = default(string))
+        /// <param name="environment">Possible values include: 'Production',
+        /// 'Test'</param>
+        public Doc2MailProviderConfiguration(System.Guid? id = default(System.Guid?), System.Guid? subscriptionId = default(System.Guid?), string name = default(string), int? systemId = default(int?), string callbackUrl = default(string), string certificateFileName = default(string), string environment = default(string))
         {
-            Environment = environment;
             Id = id;
             SubscriptionId = subscriptionId;
             Name = name;
             SystemId = systemId;
             CallbackUrl = callbackUrl;
             CertificateFileName = certificateFileName;
+            Environment = environment;
             CustomInit();
         }
 
@@ -42,12 +42,6 @@ namespace Kmd.Logic.DigitalPost.Client.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets possible values include: 'production', 'test'
-        /// </summary>
-        [JsonProperty(PropertyName = "environment")]
-        public string Environment { get; set; }
 
         /// <summary>
         /// </summary>
@@ -78,6 +72,12 @@ namespace Kmd.Logic.DigitalPost.Client.Models
         /// </summary>
         [JsonProperty(PropertyName = "certificateFileName")]
         public string CertificateFileName { get; set; }
+
+        /// <summary>
+        /// Gets or sets possible values include: 'Production', 'Test'
+        /// </summary>
+        [JsonProperty(PropertyName = "environment")]
+        public string Environment { get; set; }
 
     }
 }
