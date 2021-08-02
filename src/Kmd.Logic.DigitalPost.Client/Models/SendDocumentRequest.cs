@@ -30,9 +30,8 @@ namespace Kmd.Logic.DigitalPost.Client.Models
         /// txt, doc, etc)</param>
         /// <param name="configurationId">Id of provider configuration to
         /// use</param>
-        /// <param name="identifierType">Type of identifier - CPR for a
-        /// citizen, CVR for a company. Possible values include: 'cpr',
-        /// 'cvr'</param>
+        /// <param name="identifierType">Possible values include: 'Cpr',
+        /// 'Cvr'</param>
         /// <param name="identifier">Identifier value (CPR/CVR)</param>
         /// <param name="materialId">Id of the material defined in eBoks /
         /// Document Type defined by Doc2Mail</param>
@@ -84,8 +83,7 @@ namespace Kmd.Logic.DigitalPost.Client.Models
         public System.Guid? ConfigurationId { get; set; }
 
         /// <summary>
-        /// Gets or sets type of identifier - CPR for a citizen, CVR for a
-        /// company. Possible values include: 'cpr', 'cvr'
+        /// Gets or sets possible values include: 'Cpr', 'Cvr'
         /// </summary>
         [JsonProperty(PropertyName = "identifierType")]
         public string IdentifierType { get; set; }
