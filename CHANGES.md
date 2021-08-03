@@ -1,5 +1,5 @@
 2.0.1
-* Updated latest swagger
+* Updated swagger which includes removal of eboks provider
 
 2.0.0
 * Make client assembly strongly named
